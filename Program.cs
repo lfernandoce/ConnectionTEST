@@ -7,19 +7,14 @@ namespace ConnectionTEST
     {
         static void Main(string[] args)
         {
+            //========================================================================================================
             //Ejemplo de una coneccion a SQLSERVER
+            //========================================================================================================
+
             String StrCon = "data source=VSR-DEVCOOKIE\\DEVCOOKIE;initial catalog=MvcMovieContext;persist security info=True;user id=sa;password=LFCE_2110;MultipleActiveResultSets=True;App=ConnectionTEST";
-            //DbSQL db = new DbSQL(StrCon);
-            //db.Query = "SELECT * FROM TAB_USUARIOS_REGISTRADOS";
-            //db.Database = "DB_TESTS";
-            //db.Exec = DbSQL.Execute.Fill;
-            //db.CommandType = System.Data.CommandType.Text;
-            //db.EjecutarSQL();
-            //System.Console.ReadKey();
 
             DataTable dtSQ = new DataTable();
             //ejemplo utilizando using
-
             try
             {
                 using (DbSQL dbsql = new DbSQL(StrCon))
@@ -41,16 +36,14 @@ namespace ConnectionTEST
                 Console.WriteLine(" Error: "+ ex.Message);
                 Console.WriteLine(" Exception: "+ ex.ToString());
             }
-
-            
-
-
             System.Console.ReadKey();
 
 
 
-
+            //========================================================================================================
             //Ejemplo de coneccion a oracle, utilizamos oracle 10g
+            //========================================================================================================
+
             string strConOra = "Data Source=localhost:1521; User Id=system;Password=2110;";
             DbORACLE Oradb = new DbORACLE(strConOra);
             Oradb.Query = "SELECT * FROM TAB_USUARIOS";
@@ -66,7 +59,11 @@ namespace ConnectionTEST
             System.Console.ReadKey();
 
 
+
+
+            //========================================================================================================
             // Ejemplo de coneccion a MySQL
+            //========================================================================================================
             string strConMysql = "Server=localhost;Database=Test;Uid=root;Pwd='';";
             DbMySQL MySqldb = new DbMySQL(strConMysql);
             MySqldb.Query = "SELECT * FROM USUARIOS_TEST";            
