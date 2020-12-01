@@ -9,12 +9,42 @@ namespace ConnectionTEST
         {
             //Ejemplo de una coneccion a SQLSERVER
             String StrCon = "data source=VSR-DEVCOOKIE\\DEVCOOKIE;initial catalog=MvcMovieContext;persist security info=True;user id=sa;password=LFCE_2110;MultipleActiveResultSets=True;App=ConnectionTEST";
-            DbSQL db = new DbSQL(StrCon);
-            db.Query = "SELECT * FROM TAB_USUARIOS_REGISTRADOS";
-            db.Database = "DB_TESTS";
-            db.Exec = DbSQL.Execute.Fill;
-            db.CommandType = System.Data.CommandType.Text;
-            db.EjecutarSQL();
+            //DbSQL db = new DbSQL(StrCon);
+            //db.Query = "SELECT * FROM TAB_USUARIOS_REGISTRADOS";
+            //db.Database = "DB_TESTS";
+            //db.Exec = DbSQL.Execute.Fill;
+            //db.CommandType = System.Data.CommandType.Text;
+            //db.EjecutarSQL();
+            //System.Console.ReadKey();
+
+            DataTable dtSQ = new DataTable();
+            //ejemplo utilizando using
+
+            try
+            {
+                using (DbSQL dbsql = new DbSQL(StrCon))
+                {
+                    dbsql.Query = "SELECT * FROM TAB_USUARIOS_REGISTRADOS";
+                    dbsql.Database = "DB_TESTS";
+                    dbsql.Exec = DbSQL.Execute.Fill;
+                    dbsql.CommandType = System.Data.CommandType.Text;
+                    dtSQ = (DataTable)dbsql.EjecutarSQL();
+                    foreach (DataRow drt in dtSQ.Rows)
+                    {
+                        Console.WriteLine(drt.ItemArray.ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(" Error: "+ ex.Message);
+                Console.WriteLine(" Exception: "+ ex.ToString());
+            }
+
+            
+
+
             System.Console.ReadKey();
 
 

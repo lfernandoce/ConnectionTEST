@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Data.SqlClient;
+using Microsoft.Win32.SafeHandles;
 
 namespace ConnectionTEST
 {
-    class DbSQL
+    class DbSQL: IDisposable
     {
+        //Variables para destruir el objeto
+        private bool _disposed = false;
+        private readonly SafeFileHandle _safeHandle;
+        //Variables para estructurar las conecciones a base de datos
         public enum Execute
         {
             ExecuteNonQuery
@@ -105,5 +110,26 @@ namespace ConnectionTEST
             }
             return Resultado;
         }
+
+        public void Dispose()
+        {
+
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            // Dispose of managed resources here.
+            if (disposing)
+            {
+                _safeHandle?.Dispose();
+            }
+            // Dispose of any unmanaged resources not wrapped in safe handles.
+            _disposed = true;
+        }
+
     }
 }
