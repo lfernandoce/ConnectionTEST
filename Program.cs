@@ -11,6 +11,8 @@ namespace ConnectionTEST
             //Ejemplo de una coneccion a SQLSERVER
             //========================================================================================================
 
+            string va = System.Configuration.ConfigurationManager.AppSettings[""];
+
             String StrCon = "data source=VSR-DEVCOOKIE\\DEVCOOKIE;initial catalog=MvcMovieContext;persist security info=True;user id=sa;password=LFCE_2110;MultipleActiveResultSets=True;App=ConnectionTEST";
 
             DataTable dtSQ = new DataTable();
