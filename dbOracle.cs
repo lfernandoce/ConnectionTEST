@@ -4,10 +4,39 @@ using System.Collections.Generic;
 using System.Text;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
+using Microsoft.Win32.SafeHandles;
 namespace ConnectionTEST
 {
-    class DbORACLE
+    class DbORACLE: IDisposable
     {
+
+        //Variables para destruir el objeto
+        private bool _disposed = false;
+        private readonly SafeFileHandle _safeHandle;
+        /// <summary>
+        /// Metodo para destruir el objeto
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+            // Dispose of managed resources here.
+            if (disposing)
+            {
+                _safeHandle?.Dispose();
+            }
+            // Dispose of any unmanaged resources not wrapped in safe handles.
+            _disposed = true;
+        }
+
+
         private string StrConOracle;
         public enum Execute
         {
@@ -25,7 +54,7 @@ namespace ConnectionTEST
         public string Database { get; set; }
         public object Resultado { get; set; }
 
-        private readonly string StringCon;
+        //private readonly string StringCon="";
 
 
         public DbORACLE(string StrConOracle)
@@ -50,7 +79,7 @@ namespace ConnectionTEST
         {
             try
             {
-                string strCon = this.StringCon;
+                //string strCon = this.StrConOracle;
                 OracleConnection con = GetConnection();
                 con.Open();
                 OracleCommand cmd = new OracleCommand(Query, con);
